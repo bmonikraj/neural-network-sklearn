@@ -14,6 +14,10 @@ from keras.models import Sequential, load_model
 from keras.layers import Dense, Dropout, Activation, Conv2D,MaxPooling2D, Flatten
 import seaborn as sns
 import matplotlib.pyplot as plt
+from sklearn.svm import SVC
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.naive_bayes import GaussianNB
+from sklearn.tree import DecisionTreeClassifier
 
 #Reading dataset
 data = pd.read_csv('diabetes.csv')
@@ -50,6 +54,7 @@ sns.jointplot(x="BMI", y="Glucose", data=data, kind = 'hex',
 #Splitting of dataset into Training set and testing set (80% and 20% respectively)
 X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.2, random_state=42)
 
+'''
 #Single layer architecture
 model = Sequential()
 model.add(Dense(32,input_shape=(X_train.shape[1],)))
@@ -69,6 +74,7 @@ model.add(Activation('relu'))
 model.add(Dense(2))
 model.add(Activation('softmax'))
 
+
 print(model.summary())
 
 
@@ -79,3 +85,8 @@ loss, accuracy = model.evaluate(X_test,Y_test, verbose=0)
 print("Loss : "+str(loss))
 
 print("Accuracy :"+str(accuracy*100.0))
+'''
+
+clf = DecisionTreeClassifier(random_state=0)
+clf.fit(X_train,Y_train)
+print(clf.score(X_test,Y_test))
